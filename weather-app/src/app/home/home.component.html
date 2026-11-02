@@ -1,0 +1,14 @@
+<section class="hero">
+  <h1>Real-Time Weather Dashboard</h1>
+  <p>Check the weather for a city: temperature, humidity, wind and a 3-day outlook.</p>
+  <a class="btn" routerLink="/weather">Check weather →</a>
+</section>
+
+<section>
+  <h2>Popular cities</h2>
+  <div class="chips">
+    @for (c of popular; track c) {
+      <a class="chip" routerLink="/weather" [queryParams]="{ city: c }">{{ c }}</a>
+    }
+  </div>
+</section>

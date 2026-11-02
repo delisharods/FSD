@@ -1,0 +1,65 @@
+<h1>Weather</h1>
+
+<form class="card form" #f="ngForm" (ngSubmit)="f.valid && search()" novalidate>
+  <label for="city">City name</label>
+  <div class="row">
+    <input
+      id="city" name="city" type="text" list="cities" autocomplete="off"
+      placeholder="e.g. Nagpur" [(ngModel)]="city" #cityCtrl="ngModel"
+      required minlength="2" />
+    <button type="submit" class="btn">Get weather</button>
+  </div>
+  <datalist id="cities">
+    @for (c of cities; track c) { <option [value]="c"></option> }
+  </datalist>
+
+  @if (cityCtrl.invalid && (cityCtrl.touched || f.submitted)) {
+    <p class="error">
+      @if (cityCtrl.errors?.['required']) { Please enter a city name. }
+      @else { City name must be at least 2 characters. }
+    </p>
+  }
+
+  <fieldset class="units">
+    <legend>Units</legend>
+    <label><input type="radio" name="unit" value="C" [(ngModel)]="unit" /> °C</label>
+    <label><input type="radio" name="unit" value="F" [(ngModel)]="unit" /> °F</label>
+  </fieldset>
+</form>
+
+@if (error) {
+  <p class="error box">{{ error }}</p>
+}
+
+@if (weather; as w) {
+  <section class="card result">
+    <header>
+      <div>
+        <h2>{{ w.city }}</h2>
+        <p class="muted">{{ w.country }} · Updated {{ updatedAt | date: 'mediumTime' }}</p>
+      </div>
+      <p class="big">{{ w.icon }} {{ show(w.temp) | number: '1.0-0' }}°{{ unit }}</p>
+    </header>
+
+    <p>{{ w.condition }} · Feels like {{ show(w.feelsLike) | number: '1.0-0' }}°{{ unit }}</p>
+
+    <ul class="stats">
+      <li><span>Humidity</span><strong>{{ w.humidity }}%</strong></li>
+      <li><span>Wind</span><strong>{{ w.wind }} km/h</strong></li>
+    </ul>
+
+    <h3>Next 3 days</h3>
+    <div class="forecast">
+      @for (d of w.forecast; track d.day) {
+        <div class="day">
+          <span>{{ d.day }}</span>
+          <span class="ico">{{ d.icon }}</span>
+          <strong>{{ show(d.high) | number: '1.0-0' }}°</strong>
+          <small>{{ show(d.low) | number: '1.0-0' }}°</small>
+        </div>
+      }
+    </div>
+  </section>
+} @else if (!error) {
+  <p class="muted">Enter a city above to see its weather.</p>
+}

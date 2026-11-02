@@ -1,0 +1,14 @@
+<header class="topbar">
+  <a class="brand" routerLink="/home">☁️ Weather Dashboard</a>
+  <nav>
+    <a routerLink="/home" routerLinkActive="active">Home</a>
+    <a routerLink="/weather" routerLinkActive="active">Weather</a>
+    <a routerLink="/about" routerLinkActive="active">About</a>
+  </nav>
+</header>
+
+<main class="container">
+  <router-outlet />
+</main>
+
+<footer class="footer">© {{ year }} Weather Dashboard · Angular experiment</footer>
