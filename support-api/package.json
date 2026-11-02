@@ -1,0 +1,14 @@
+{
+  "name": "support-ticket-api",
+  "version": "1.0.0",
+  "description": "REST API for customer support tickets (Node.js + Express)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
